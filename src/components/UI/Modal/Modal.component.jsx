@@ -1,6 +1,8 @@
 import React from 'react'
 
+import classes from '*.module.css'
+
 export default props => 
-    <div>
+    <div className={classes.Modal}>
         {props.children}
     </div>
