@@ -1,9 +1,10 @@
 .Burger{
     width:50%;
-    margin:auto;
-    height:330px;
+    height:45%;
+    position: fixed;
     overflow-y: scroll;
     font-weight: bold;
     text-align: center;
     font-size: 1.2rem;
+    margin: 56px 20%;
 }
