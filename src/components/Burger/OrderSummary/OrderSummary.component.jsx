@@ -3,7 +3,7 @@ import React from 'react'
 export default props =>{
     
     let ingredients = Object.keys(props.ingredients).map(ing => {
-        return <li>{ing} :: {props.ingredients[ing]}</li>
+        return <li key={ing}>{ing} :: {props.ingredients[ing]}</li>
     })
 
     return <div>
