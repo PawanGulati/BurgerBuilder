@@ -25,6 +25,7 @@ export default class extends Component{
         },
         totalPrice:4,
         purchasable:false,
+        purchasing:false
     }   
 
     AddIngredientsHandler = type =>{
@@ -72,13 +73,21 @@ export default class extends Component{
         return price !== 4 
     } 
 
+    Purchasing = ()=>{
+        this.setState({purchasing:true})
+    }
+
+    CancelPurchasingHandler = () =>{
+        this.setState({purchasing:false})
+    }
+
     render(){
         return <div>
-            <Modal>
+            <Modal show={this.state.purchasing} backDropClicked={this.CancelPurchasingHandler}>
                 <OrderSummary ingredients= {this.state.ingredients}/>
             </Modal>
             <Burger ingredients = {this.state.ingredients} />
-            <BuildControls purchasable={this.state.purchasable} price={this.state.totalPrice} AddIngr={this.AddIngredientsHandler} RemoveIngr={this.RemoveIngredientsHandler} ingredients={this.state.ingredients}/>
+            <BuildControls orderIt={this.Purchasing} purchasable={this.state.purchasable} price={this.state.totalPrice} AddIngr={this.AddIngredientsHandler} RemoveIngr={this.RemoveIngredientsHandler} ingredients={this.state.ingredients}/>
         </div>
     }
 } 
