@@ -14,6 +14,7 @@ export default props =>{
         <ul>
             {ingredients}
         </ul>
+        <p><strong>TotalPrice :: {props.price}</strong></p>
         <p style={{textAlign:'center'}}> Continue for checkout </p>
         <Button btnType='Success' clicked={props.continuePurchase}>CONTINUE</Button>
         <Button btnType='Danger' clicked={props.cancelPurchase}>CANCEL</Button>

@@ -88,7 +88,7 @@ export default class extends Component{
     render(){
         return <div>
             <Modal show={this.state.purchasing} backDropClicked={this.CancelPurchasingHandler}>
-                <OrderSummary ingredients= {this.state.ingredients} cancelPurchase={this.CancelPurchasingHandler} continuePurchase={this.ContinuePurchasingHandler}/>
+                <OrderSummary price={this.state.totalPrice.toFixed(2)} ingredients= {this.state.ingredients} cancelPurchase={this.CancelPurchasingHandler} continuePurchase={this.ContinuePurchasingHandler}/>
             </Modal>
             <Burger ingredients = {this.state.ingredients} />
             <BuildControls orderIt={this.Purchasing} purchasable={this.state.purchasable} price={this.state.totalPrice} AddIngr={this.AddIngredientsHandler} RemoveIngr={this.RemoveIngredientsHandler} ingredients={this.state.ingredients}/>
