@@ -3,6 +3,6 @@ import classes from './Backdrop.module.css'
 
 export default props =>{
     return props.show ?  
-    <div className={classes.BackDrop}/>
+    <div onClick={props.clicked} className={classes.BackDrop}/>
     : null;
 }
