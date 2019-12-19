@@ -1,23 +1,45 @@
 .NavItem{
-    margin:0;
+    margin:10px 0;
     box-sizing: border-box;
-    height: 100%;
-    display: flex;
-    align-items: center;                        
+    display: block;
+    width: 100%;
 }
 
 .NavItem a{
-    color:white;
+    color:#8F5C2C;
     text-decoration: none;
-    height: 100%;
-    padding: 16px 10px;
-    border-bottom: 4px solid transparent;
+    width: 100%;
     box-sizing: border-box;
     display: block;
 }
 
 .NavItem a:hover, .NavItem a:active, .NavItem a.active{
-    background-color: #8F5C2C;
     border-bottom: 4px solid #40A4C8;
-    color: white;
+    color: #40A4C8;
+}
+
+@media(min-width:499px){
+    .NavItem{
+        margin:0;
+        display: flex;
+        align-items: center;                        
+        width: auto;
+    }
+    
+    .NavItem a{
+        color:white;
+        text-decoration: none;
+        height: 100%;
+        width: auto;
+        padding: 16px 10px;
+        border-bottom: 4px solid transparent;
+        box-sizing: border-box;
+        display: block;
+    }
+    
+    .NavItem a:hover, .NavItem a:active, .NavItem a.active{
+        background-color: #8F5C2C;
+        border-bottom: 4px solid #40A4C8;
+        color: white;
+    }
 }

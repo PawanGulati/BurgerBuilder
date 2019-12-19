@@ -5,4 +5,11 @@
     align-items: center;
     height: 100%;
     list-style-type:none;
+    flex-flow: column;
+}
+
+@media(min-width:500px){
+    .NavItems{
+        flex-flow: row;
+    }
 }
