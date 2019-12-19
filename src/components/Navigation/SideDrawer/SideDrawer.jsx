@@ -10,7 +10,7 @@ export default props =>{
         <BackDrop clicked={props.clicked} show={props.show}/>
         <div className={`${classes.SideDrawer} ${props.show ? classes.Open : classes.Close}`}>
             <Logo hgt={'11%'}/>
-            <nav>
+            <nav style={{marginTop:'20px'}}>
                 <NavItems/>
             </nav>
         </div>
