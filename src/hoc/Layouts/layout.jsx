@@ -7,7 +7,7 @@ import SideDrawer from '../../components/Navigation/SideDrawer/SideDrawer'
 export default class extends Component{
     
     state={
-        sideDrawer:true
+        sideDrawer:false
     }
 
     ToggleSideDrawer = () =>{
@@ -20,7 +20,7 @@ export default class extends Component{
         return(
             <Aux>
                 <SideDrawer clicked={this.ToggleSideDrawer} show={this.state.sideDrawer}/>
-                <Toolbar/> 
+                <Toolbar clicked={this.ToggleSideDrawer}/> 
                 <main>
                     {this.props.children}
                 </main>
