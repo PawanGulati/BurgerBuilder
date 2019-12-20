@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 
 import Burger from '../../components/Burger/Burger.components'
 import BuildControls from '../../components/Burger/BuildControls/BuildControls.component'
@@ -19,17 +19,21 @@ const INGREDIENTS_COST = {
 export default withErrorHandler(class extends Component{
 
     state = {
-        ingredients:{
-            cheese:0,
-            meat:0,
-            bacon:0, 
-            salad:0
-        },
+        ingredients:null,
         totalPrice:4,
         purchasable:false,
         purchasing:false,
-        loading:false
+        loading:false,
+        error:false
     }   
+
+    componentDidMount(){
+        axios.get('/ingredients.jso').then(res => {
+            this.setState({ingredients:res.data})
+        }).catch(err => {
+            this.setState({error:true})
+        })
+    }
 
     AddIngredientsHandler = type =>{
         let OldCount = this.state.ingredients[type]
@@ -119,7 +123,18 @@ export default withErrorHandler(class extends Component{
     }
 
     render(){
-        let orderSummary = <OrderSummary price={this.state.totalPrice.toFixed(2)} ingredients= {this.state.ingredients} cancelPurchase={this.CancelPurchasingHandler} continuePurchase={this.ContinuePurchasingHandler}/>
+
+        let burger = this.state.error ? <p style={{margin:'50% 0 0 20%'}}><strong>ingredients ain't found !!</strong> </p> : <Spinner/>
+        let orderSummary = null
+        if(this.state.ingredients){
+            orderSummary = <OrderSummary price={this.state.totalPrice.toFixed(2)} ingredients= {this.state.ingredients} cancelPurchase={this.CancelPurchasingHandler} continuePurchase={this.ContinuePurchasingHandler}/>
+            burger = (
+                <Fragment>
+                    <Burger ingredients = {this.state.ingredients} />
+                    <BuildControls orderIt={this.Purchasing} purchasable={this.state.purchasable} price={this.state.totalPrice} AddIngr={this.AddIngredientsHandler} RemoveIngr={this.RemoveIngredientsHandler} ingredients={this.state.ingredients}/>
+                </Fragment>
+            )
+        }
         if(this.state.loading){
             orderSummary = <Spinner/>
         }
@@ -128,8 +143,7 @@ export default withErrorHandler(class extends Component{
             <Modal show={this.state.purchasing} backDropClicked={this.CancelPurchasingHandler}>
                 {orderSummary}
             </Modal>
-            <Burger ingredients = {this.state.ingredients} />
-            <BuildControls orderIt={this.Purchasing} purchasable={this.state.purchasable} price={this.state.totalPrice} AddIngr={this.AddIngredientsHandler} RemoveIngr={this.RemoveIngredientsHandler} ingredients={this.state.ingredients}/>
+            {burger}
         </div>
     }
 },axios)
