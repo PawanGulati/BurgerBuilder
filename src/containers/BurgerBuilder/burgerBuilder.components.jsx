@@ -5,6 +5,7 @@ import BuildControls from '../../components/Burger/BuildControls/BuildControls.c
 import Modal from '../../components/UI/Modal/Modal.component'
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary.component'
 import Spinner from '../../components/UI/Spinner/Spinner'
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
 
 import axios from '../../axios-orders'
 
@@ -15,7 +16,7 @@ const INGREDIENTS_COST = {
     bacon:4
 }
 
-export default class extends Component{
+export default withErrorHandler(class extends Component{
 
     state = {
         ingredients:{
@@ -131,4 +132,4 @@ export default class extends Component{
             <BuildControls orderIt={this.Purchasing} purchasable={this.state.purchasable} price={this.state.totalPrice} AddIngr={this.AddIngredientsHandler} RemoveIngr={this.RemoveIngredientsHandler} ingredients={this.state.ingredients}/>
         </div>
     }
-} 
+},axios)
