@@ -1,4 +1,47 @@
-.Loader {
+.fancySpinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 5rem;
+  height: 5rem;
+  margin:72px auto;
+}
+.fancySpinner > div {
+  position: absolute;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+}
+.fancySpinner > .ring {
+  border-width: 0.5rem;
+  border-style: solid;
+  border-color: transparent;
+  animation: fancy  2s infinite alternate;
+}
+.fancySpinner > .ring:nth-child(1) {
+  border-left-color: #5a4ff8;
+  border-right-color: #5a4ff8;
+}
+.fancySpinner > .ring:nth-child(2) {
+  border-top-color: #5a4ff8;
+  border-bottom-color: #5a4ff8;
+  animation-delay: 1s;
+}
+
+.fancySpinner > .dot {
+  width: 1rem;
+  height: 1rem;
+  background: #5a4ff8;
+}
+
+@keyframes fancy {
+  to {
+    transform: rotate(360deg) scale(0.5);
+  }
+}
+
+
+/* .Loader {
     color: #f84545;
     font-size: 90px;
     text-indent: -9999em;
@@ -78,4 +121,4 @@
       transform: rotate(360deg);
     }
   }
-  
+   */
