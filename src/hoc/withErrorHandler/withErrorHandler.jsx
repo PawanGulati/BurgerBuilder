@@ -5,11 +5,9 @@ import axios from '../../axios-orders'
 
 export default function withErrorHandler(WrappedComponent,axios){
     return class extends Component{
-        state={
-            error:null
-        }
-
-        componentDidMount(){
+        constructor()
+        {
+            super()
             axios.interceptors.response.use(res => res,error => {
                 this.setState({error})
             })
@@ -18,6 +16,10 @@ export default function withErrorHandler(WrappedComponent,axios){
                 this.setState({error:null})
                 return req
             })
+        }
+        
+        state={
+            error:null
         }
 
         errorConformed = () =>{
