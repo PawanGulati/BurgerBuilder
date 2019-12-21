@@ -28,7 +28,7 @@ export default withErrorHandler(class extends Component{
     }   
 
     componentDidMount(){
-        axios.get('/ingredients.jso').then(res => {
+        axios.get('/ingredients.json').then(res => {
             this.setState({ingredients:res.data})
         }).catch(err => {
             this.setState({error:true})
