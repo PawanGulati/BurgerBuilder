@@ -19,7 +19,13 @@ const INGREDIENTS_COST = {
 export default withErrorHandler(class extends Component{
 
     state = {
-        ingredients:null,
+        // ingredients:null,
+        ingredients:{
+            bacon:0,
+            cheese:0,
+            meat:0,
+            salad:0
+        },
         totalPrice:4,
         purchasable:false,
         purchasing:false,
@@ -90,36 +96,46 @@ export default withErrorHandler(class extends Component{
 
     ContinuePurchasingHandler = ()=> {
 
-        this.setState({loading:true})
-
-        const order = {
-            ingredients:this.state.ingredients,
-            price:this.state.totalPrice,
-            customer:{
-                name:'Pawan',
-                address:{
-                    street:'street1',
-                    zipcode:'test01',
-                    country:'test'
-                },
-                email:'test@test.com',
-            },
-            delivery:'fastest'
+        const queryParams = []
+        for(let i in this.state.ingredients){
+            queryParams.push(`${i}=${this.state.ingredients[i]}`)
         }
 
-        axios.post('/orders.json' , order)
-            .then(res => {
-                this.setState({
-                    loading:false,
-                    purchasing:false
-                })
-            })
-            .catch(err =>{
-                this.setState({
-                    loading:false,
-                    purchasing:false
-                })
-            })
+        this.props.history.push({
+            pathname:'/checkout',
+            search:'?' + queryParams.join('&')
+        })
+
+        // this.setState({loading:true})
+
+        // const order = {
+        //     ingredients:this.state.ingredients,
+        //     price:this.state.totalPrice,
+        //     customer:{
+        //         name:'Pawan',
+        //         address:{
+        //             street:'street1',
+        //             zipcode:'test01',
+        //             country:'test'
+        //         },
+        //         email:'test@test.com',
+        //     },
+        //     delivery:'fastest'
+        // }
+
+        // axios.post('/orders.json' , order)
+        //     .then(res => {
+        //         this.setState({
+        //             loading:false,
+        //             purchasing:false
+        //         })
+        //     })
+        //     .catch(err =>{
+        //         this.setState({
+        //             loading:false,
+        //             purchasing:false
+        //         })
+        //     })
     }
 
     render(){
@@ -130,7 +146,9 @@ export default withErrorHandler(class extends Component{
             orderSummary = <OrderSummary price={this.state.totalPrice.toFixed(2)} ingredients= {this.state.ingredients} cancelPurchase={this.CancelPurchasingHandler} continuePurchase={this.ContinuePurchasingHandler}/>
             burger = (
                 <Fragment>
-                    <Burger ingredients = {this.state.ingredients} />
+                    <div style={{width:'50%',margin:'auto'}}>
+                        <Burger ingredients = {this.state.ingredients} />
+                    </div>
                     <BuildControls orderIt={this.Purchasing} purchasable={this.state.purchasable} price={this.state.totalPrice} AddIngr={this.AddIngredientsHandler} RemoveIngr={this.RemoveIngredientsHandler} ingredients={this.state.ingredients}/>
                 </Fragment>
             )
