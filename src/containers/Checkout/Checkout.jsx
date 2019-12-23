@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary'
 import { Route } from 'react-router-dom'
 import Spinner from '../../components/UI/Spinner/Spinner';
+import ContactData from './ContactData/ContactData';
 
 export default class extends Component {
 
@@ -28,9 +29,9 @@ export default class extends Component {
     }
 
     render() {
-        let checkSummry = <Spinner/>
+        let checkSummary = <Spinner/> 
         if(this.state.ingredients){
-            checkSummry=<CheckoutSummary 
+            checkSummary=<CheckoutSummary 
             ingredients={this.state.ingredients} 
             cancelClicked={this.CancelCheckoutHandler} 
             continueClicked={this.ContinueCheckoutHandler}/>
@@ -38,8 +39,8 @@ export default class extends Component {
 
         return (
             <div>
-                {checkSummry}
-                <Route path={this.props.match.path + '/contact-data'} render={()=><h1>Contact Form</h1>}/> 
+                {checkSummary}
+                <Route path={this.props.match.path + '/contact-data'} component={ContactData}/> 
             </div>
         )
     }
