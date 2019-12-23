@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import ContactForm from '../../../components/Order/ContactForm/ContactForm'
 import Modal from '../../../components/UI/Modal/Modal.component'
+import axios from '../../../axios-orders'
+import Spinner from '../../../components/UI/Spinner/Spinner'
 
 export default class extends Component {
 
@@ -47,29 +49,81 @@ export default class extends Component {
                             dispValue:'Fast AF'
                         },
                         {
-                            value:'cheapest',
-                            dispValue:'Cheapest'
+                            value:'slowest',
+                            dispValue:'Slowest'
                         },
                     ]
                 }
             }
         },
+        loading:false,
         formVisible:true
     }
 
-    
-
-    CancelFormHandler = () =>{
+    cancelFormHandler = ()=>{
         this.setState({formVisible:false})
-        
         this.props.history.goBack()
+    }
+
+    ContinueFormHandler = e =>{
+        // e.preventDefault()
+        this.setState({loading:true})
+
+        const order = {
+            ingredients:this.props.ingredients,
+            price:this.props.price,
+            customer:{
+                name:this.state.orderForm.name.value,
+                address:{
+                    street:this.state.orderForm.street.value,
+                    zipcode:this.state.orderForm.ZipCode.value,
+                },
+                email:this.state.orderForm.email.value,
+            },
+            deliveryMethod:this.state.orderForm.deliveryMethod.value
+        }
+        // console.log(order);
+        
+
+        axios.post('/orders.json' , order)
+            .then(res => {
+                this.setState({
+                    loading:false
+                })
+            })
+            .catch(err =>{
+                this.setState({
+                    loading:false
+                })
+            })
+    }
+
+    inputChangeHandler = (e,dataKey) =>{
+        const updatedOrderForm = {
+            ...this.state.orderForm
+        }
+        const updatedFormEl = {
+            ...updatedOrderForm[dataKey]
+        }
+
+        updatedFormEl.value = e.target.value
+        updatedOrderForm[dataKey] = updatedFormEl
+
+        this.setState({
+            orderForm:updatedOrderForm
+        })
     }
 
     render() {
 
+        let form = <Spinner/>
+        if(!this.state.loading){
+            form = <ContactForm orderForm={this.state.orderForm} inputChange={this.inputChangeHandler} continueOrder={this.ContinueFormHandler}/>
+        }
+
         return (
-            <Modal show={this.state.formVisible} backDropClicked={this.CancelFormHandler}>
-                <ContactForm orderForm={this.state.orderForm} continueOrder={this.CancelFormHandler} cancelOrder={this.CancelFormHandler}/>
+            <Modal show={this.state.formVisible} backDropClicked={this.cancelFormHandler}>
+                {form}
             </Modal>
         )
     }
