@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 
 import Modal from '../../components/UI/Modal/Modal.component'
-import axios from '../../axios-orders'
 
 export default function withErrorHandler(WrappedComponent,axios){
     return class extends Component{
