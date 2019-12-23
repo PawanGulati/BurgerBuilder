@@ -13,7 +13,7 @@ export default props => {
         })
     }
 
-    console.log(formElemArr);
+    // console.log(formElemArr);
     
 
     return( 
@@ -26,14 +26,15 @@ export default props => {
                         <Input ElemType={formEl.config.ElemType}
                             ElemConfig={formEl.config.ElemConfig}
                             value={formEl.config.value}
-                            key={formEl.id}/> 
+                            key={formEl.id}
+                            inputChange={e => props.inputChange(e,formEl.id)}
+                            /> 
                     </div>
                     ))
                 }    
             </form>
             <div>
-                <Button btnType='Danger'clicked={props.cancelOrder}> CANCEL </Button>
-                <Button btnType='Success'clicked={props.continueOrder}>!! ORDER IT !! </Button>
+                <Button clicked={props.continueOrder} btnType='Success'>!! ORDER IT !! </Button>
             </div>
 
         </div>
