@@ -101,41 +101,12 @@ export default withErrorHandler(class extends Component{
             queryParams.push(`${i}=${this.state.ingredients[i]}`)
         }
 
+        queryParams.push(`price=${this.state.totalPrice}`)
+
         this.props.history.push({
             pathname:'/checkout',
             search:'?' + queryParams.join('&')
         })
-
-        // this.setState({loading:true})
-
-        // const order = {
-        //     ingredients:this.state.ingredients,
-        //     price:this.state.totalPrice,
-        //     customer:{
-        //         name:'Pawan',
-        //         address:{
-        //             street:'street1',
-        //             zipcode:'test01',
-        //             country:'test'
-        //         },
-        //         email:'test@test.com',
-        //     },
-        //     delivery:'fastest'
-        // }
-
-        // axios.post('/orders.json' , order)
-        //     .then(res => {
-        //         this.setState({
-        //             loading:false,
-        //             purchasing:false
-        //         })
-        //     })
-        //     .catch(err =>{
-        //         this.setState({
-        //             loading:false,
-        //             purchasing:false
-        //         })
-        //     })
     }
 
     render(){
