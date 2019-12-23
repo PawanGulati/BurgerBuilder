@@ -90,6 +90,7 @@ export default class extends Component {
                 this.setState({
                     loading:false
                 })
+                this.props.history.push('/')
             })
             .catch(err =>{
                 this.setState({
