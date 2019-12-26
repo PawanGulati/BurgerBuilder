@@ -12,15 +12,12 @@ import axios from '../../axios-orders'
 import {connect} from 'react-redux'
 import * as actionTypes from '../../store/action'
 
-const INGREDIENTS_COST = {
-    salad:1,
-    cheese:2,
-    meat:4,
-    bacon:4
-}
 
 const mapStateToProps = state => {
-    return {ing : state.ingredients}
+    return {
+        ing : state.ingredients,
+        price: state.totalPrice
+    }
 }
 
 const mapDispatchToProps = dispatch =>{
@@ -40,7 +37,6 @@ export default connect(mapStateToProps,mapDispatchToProps)(withErrorHandler(clas
         //     meat:0,
         //     salad:0
         // },
-        totalPrice:4,
         purchasable:false,
         purchasing:false,
         loading:false,
@@ -115,7 +111,7 @@ export default connect(mapStateToProps,mapDispatchToProps)(withErrorHandler(clas
             queryParams.push(`${i}=${this.props.ing[i]}`)
         }
 
-        queryParams.push(`price=${this.state.totalPrice}`)
+        queryParams.push(`price=${this.props.price}`)
 
         this.props.history.push({
             pathname:'/checkout',
@@ -128,13 +124,13 @@ export default connect(mapStateToProps,mapDispatchToProps)(withErrorHandler(clas
         let burger = this.state.error ? <p style={{margin:'50% 0 0 20%'}}><strong>ingredients ain't found !!</strong> </p> : <Spinner/>
         let orderSummary = null
         if(this.props.ing){
-            orderSummary = <OrderSummary price={this.state.totalPrice.toFixed(2)} ingredients= {this.props.ing} cancelPurchase={this.CancelPurchasingHandler} continuePurchase={this.ContinuePurchasingHandler}/>
+            orderSummary = <OrderSummary price={this.props.price.toFixed(2)} ingredients= {this.props.ing} cancelPurchase={this.CancelPurchasingHandler} continuePurchase={this.ContinuePurchasingHandler}/>
             burger = (
                 <Fragment>
                     <div style={{width:'50%',margin:'auto'}}>
                         <Burger ingredients = {this.props.ing} />
                     </div>
-                    <BuildControls orderIt={this.Purchasing} purchasable={this.state.purchasable} price={this.state.totalPrice} AddIngr={this.props.addIngr} RemoveIngr={this.props.remvIngr} ingredients={this.props.ing}/>
+                    <BuildControls orderIt={this.Purchasing} purchasable={this.state.purchasable} price={this.props.price} AddIngr={this.props.addIngr} RemoveIngr={this.props.remvIngr} ingredients={this.props.ing}/>
                 </Fragment>
             )
         }
