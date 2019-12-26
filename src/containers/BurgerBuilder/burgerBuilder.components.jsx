@@ -9,6 +9,9 @@ import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
 
 import axios from '../../axios-orders'
 
+import {connect} from 'react-redux'
+import * as actionTypes from '../../store/action'
+
 const INGREDIENTS_COST = {
     salad:1,
     cheese:2,
@@ -16,16 +19,27 @@ const INGREDIENTS_COST = {
     bacon:4
 }
 
-export default withErrorHandler(class extends Component{
+const mapStateToProps = state => {
+    return {ing : state.ingredients}
+}
+
+const mapDispatchToProps = dispatch =>{
+    return{
+        addIngr:(ingrName)=>dispatch({type:actionTypes.ADDINGR,ingrName}),
+        remvIngr:(ingrName)=>dispatch({type:actionTypes.REMVINGR,ingrName}),
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(withErrorHandler(class extends Component{
 
     state = {
         // ingredients:null,
-        ingredients:{
-            bacon:0,
-            cheese:0,
-            meat:0,
-            salad:0
-        },
+        // ingredients:{
+        //     bacon:0,
+        //     cheese:0,
+        //     meat:0,
+        //     salad:0
+        // },
         totalPrice:4,
         purchasable:false,
         purchasing:false,
@@ -33,54 +47,54 @@ export default withErrorHandler(class extends Component{
         error:false
     }   
 
-    componentDidMount(){
-        axios.get('/ingredients.json').then(res => {
-            this.setState({ingredients:res.data})
-        }).catch(err => {
-            this.setState({error:true})
-        })
-    }
+    // componentDidMount(){
+        // axios.get('/ingredients.json').then(res => {
+        //     this.setState({ingredients:res.data})
+        // }).catch(err => {
+        //     this.setState({error:true})
+        // })
+    // }
 
-    AddIngredientsHandler = type =>{
-        let OldCount = this.state.ingredients[type]
-        let NewCount = OldCount + 1
-        let UpdatedIngredients = {
-            ...this.state.ingredients
-        } 
-        UpdatedIngredients[type] = NewCount
+    // AddIngredientsHandle = type =>{
+    //     let OldCount = this.[type]
+    //     let NewCount = OldCount + 1
+    //     let UpdatedIngredients = {
+    //         ...this.state.ingredients
+    //     } 
+    //     UpdatedIngredients[type] = NewCount
 
-        let OldPrice = this.state.totalPrice
-        let NewPrice = OldPrice + INGREDIENTS_COST[type]
+    //     let OldPrice = this.state.totalPrice
+    //     let NewPrice = OldPrice + INGREDIENTS_COST[type]
 
-        let purchasable = this.IsItPurchasable(NewPrice)
+    //     let purchasable = this.IsItPurchasable(NewPrice)
 
-        this.setState({
-            totalPrice:NewPrice,
-            ingredients:UpdatedIngredients,
-            purchasable
-        })        
-    }
+    //     this.setState({
+    //         totalPrice:NewPrice,
+    //         ingredients:UpdatedIngredients,
+    //         purchasable
+    //     })        
+    // }
 
-    RemoveIngredientsHandler = type =>{
-        let OldCount = this.state.ingredients[type]
-        let NewCount = OldCount - 1
-        if(NewCount<0) return
-        let UpdatedIngredients = {
-            ...this.state.ingredients
-        } 
-        UpdatedIngredients[type] = NewCount
+    // RemoveIngredientsHandler = type =>{
+    //     let OldCount = this.state.ingredients[type]
+    //     let NewCount = OldCount - 1
+    //     if(NewCount<0) return
+    //     let UpdatedIngredients = {
+    //         ...this.state.ingredients
+    //     } 
+    //     UpdatedIngredients[type] = NewCount
 
-        let OldPrice = this.state.totalPrice
-        let NewPrice = OldPrice - INGREDIENTS_COST[type]
+    //     let OldPrice = this.state.totalPrice
+    //     let NewPrice = OldPrice - INGREDIENTS_COST[type]
 
-        let purchasable = this.IsItPurchasable(NewPrice)
+    //     let purchasable = this.IsItPurchasable(NewPrice)
 
-        this.setState({
-            totalPrice:NewPrice,
-            ingredients:UpdatedIngredients,
-            purchasable
-        })
-    }
+    //     this.setState({
+    //         totalPrice:NewPrice,
+    //         ingredients:UpdatedIngredients,
+    //         purchasable
+    //     })
+    // }
 
     IsItPurchasable = (price) =>{
         return price !== 4 
@@ -97,8 +111,8 @@ export default withErrorHandler(class extends Component{
     ContinuePurchasingHandler = ()=> {
 
         const queryParams = []
-        for(let i in this.state.ingredients){
-            queryParams.push(`${i}=${this.state.ingredients[i]}`)
+        for(let i in this.props.ing){
+            queryParams.push(`${i}=${this.props.ing[i]}`)
         }
 
         queryParams.push(`price=${this.state.totalPrice}`)
@@ -113,14 +127,14 @@ export default withErrorHandler(class extends Component{
 
         let burger = this.state.error ? <p style={{margin:'50% 0 0 20%'}}><strong>ingredients ain't found !!</strong> </p> : <Spinner/>
         let orderSummary = null
-        if(this.state.ingredients){
-            orderSummary = <OrderSummary price={this.state.totalPrice.toFixed(2)} ingredients= {this.state.ingredients} cancelPurchase={this.CancelPurchasingHandler} continuePurchase={this.ContinuePurchasingHandler}/>
+        if(this.props.ing){
+            orderSummary = <OrderSummary price={this.state.totalPrice.toFixed(2)} ingredients= {this.props.ing} cancelPurchase={this.CancelPurchasingHandler} continuePurchase={this.ContinuePurchasingHandler}/>
             burger = (
                 <Fragment>
                     <div style={{width:'50%',margin:'auto'}}>
-                        <Burger ingredients = {this.state.ingredients} />
+                        <Burger ingredients = {this.props.ing} />
                     </div>
-                    <BuildControls orderIt={this.Purchasing} purchasable={this.state.purchasable} price={this.state.totalPrice} AddIngr={this.AddIngredientsHandler} RemoveIngr={this.RemoveIngredientsHandler} ingredients={this.state.ingredients}/>
+                    <BuildControls orderIt={this.Purchasing} purchasable={this.state.purchasable} price={this.state.totalPrice} AddIngr={this.props.addIngr} RemoveIngr={this.props.remvIngr} ingredients={this.props.ing}/>
                 </Fragment>
             )
         }
@@ -135,4 +149,4 @@ export default withErrorHandler(class extends Component{
             {burger}
         </div>
     }
-},axios)
+},axios))
