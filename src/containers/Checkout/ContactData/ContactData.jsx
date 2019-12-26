@@ -53,7 +53,8 @@ export default class extends Component {
                             dispValue:'Slowest'
                         },
                     ]
-                }
+                },
+                value:'fastest'
             }
         },
         loading:false,
@@ -82,7 +83,7 @@ export default class extends Component {
             },
             deliveryMethod:this.state.orderForm.deliveryMethod.value
         }
-        // console.log(order);
+        console.log(order);
         
 
         axios.post('/orders.json' , order)

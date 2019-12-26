@@ -4,3 +4,8 @@
     outline: none;
     box-sizing: border-box;
 }
+
+.Input:focus{
+    box-shadow: 2px 2px #ccc;
+    background-color: rgb(245, 231, 231);
+}

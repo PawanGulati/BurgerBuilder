@@ -22,7 +22,7 @@ export default props => {
             <form >
                 {formElemArr.map(formEl => (
                     <div key={formEl.id} style={{margin:'2px'}}>
-                        <label style={{margin:'6px',fontWeight:'bold'}}>{formEl.id}</label>
+                        <label style={{margin:'6px',fontWeight:'bold',textTransform: 'capitalize'}}>{formEl.id}</label>
                         <Input ElemType={formEl.config.ElemType}
                             ElemConfig={formEl.config.ElemConfig}
                             value={formEl.config.value}

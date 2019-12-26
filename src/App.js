@@ -11,7 +11,6 @@ function App() {
   return (
     <div className="App">
       <Layout>
-
         <Switch>
           <Route path='/checkout' component={Checkout}/>
           <Route path='/' component={BurgerBuilder}/>        
