@@ -1,3 +1,5 @@
+import * as actionTypes from './action'
+
 const initialState = {
     ingredients:{
         bacon:0,
@@ -9,5 +11,25 @@ const initialState = {
 }
 
 export default (state=initialState,action) => {
-    return state
+    switch (action.type) {
+        case actionTypes.ADDINGR:
+            return{
+                ...state,
+                    ingredients:{...state.ingredients,
+                        [action.ingrName]:state.ingredients[action.ingrName] + 1
+                    }    
+                }
+            break;
+        case actionTypes.REMVINGR:
+            return{
+                ...state,
+                    ingredients:{...state.ingredients,
+                        [action.ingrName]: state.ingredients[action.ingrName] ? state.ingredients[action.ingrName] - 1 : 0
+                    }                
+            }
+            break;
+        default:
+            return state
+            break;
+    }
 }
