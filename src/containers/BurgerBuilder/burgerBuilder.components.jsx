@@ -57,17 +57,14 @@ export default connect(mapStateToProps,mapDispatchToProps)(withErrorHandler(clas
 
     ContinuePurchasingHandler = ()=> {
 
-        const queryParams = []
-        for(let i in this.props.ing){
-            queryParams.push(`${i}=${this.props.ing[i]}`)
-        }
+        // const queryParams = []
+        // for(let i in this.props.ing){
+        //     queryParams.push(`${i}=${this.props.ing[i]}`)
+        // }
 
-        queryParams.push(`price=${this.props.price}`)
+        // queryParams.push(`price=${this.props.price}`)
 
-        this.props.history.push({
-            pathname:'/checkout',
-            search:'?' + queryParams.join('&')
-        })
+        this.props.history.push('/checkout')
     }
 
     render(){

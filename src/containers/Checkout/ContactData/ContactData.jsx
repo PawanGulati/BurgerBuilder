@@ -4,7 +4,18 @@ import Modal from '../../../components/UI/Modal/Modal.component'
 import axios from '../../../axios-orders'
 import Spinner from '../../../components/UI/Spinner/Spinner'
 
-export default class extends Component {
+//Implementin' REDUX to project
+import {connect} from 'react-redux'
+// import * as actionTypes from '../../store/action'
+
+const mapStateToProps = state => {
+    return{
+        ing:state.ingredients,
+        price:state.totalPrice
+    }
+}
+
+export default connect(mapStateToProps)(class extends Component {
 
     state = {
         orderForm:{
@@ -71,7 +82,7 @@ export default class extends Component {
         this.setState({loading:true})
 
         const order = {
-            ingredients:this.props.ingredients,
+            ingredients:this.props.ing,
             price:this.props.price,
             customer:{
                 name:this.state.orderForm.name.value,
@@ -129,4 +140,4 @@ export default class extends Component {
             </Modal>
         )
     }
-}
+})
