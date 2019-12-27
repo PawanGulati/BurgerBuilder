@@ -6,16 +6,25 @@ import Spinner from '../../../components/UI/Spinner/Spinner'
 
 //Implementin' REDUX to project
 import {connect} from 'react-redux'
-// import * as actionTypes from '../../store/action'
+import * as orderAction from '../../../store/actions/orders'
 
 const mapStateToProps = state => {
     return{
         ing:state.ingredients,
-        price:state.totalPrice
+        price:state.totalPrice,
+        loading:state.loading,
+        formVisible:state.formVisible
     }
 }
 
-export default connect(mapStateToProps)(class extends Component {
+const mapDispatchToProps = dispatch => {
+    return{
+        purchaseDone:(orderData)=>{dispatch(orderAction.purchaseDone(orderData))},
+        purchaseStart:()=>{dispatch(orderAction.purchaseStart())}
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(class extends Component {
 
     state = {
         orderForm:{
@@ -68,7 +77,6 @@ export default connect(mapStateToProps)(class extends Component {
                 value:'fastest'
             }
         },
-        loading:false,
         formVisible:true
     }
 
@@ -79,7 +87,8 @@ export default connect(mapStateToProps)(class extends Component {
 
     ContinueFormHandler = e =>{
         // e.preventDefault()
-        this.setState({loading:true})
+        // this.setState({loading:true})
+        this.props.purchaseStart()
 
         const order = {
             ingredients:this.props.ing,
@@ -96,19 +105,20 @@ export default connect(mapStateToProps)(class extends Component {
         }
         console.log(order);
         
+        this.props.purchaseDone(order)
 
-        axios.post('/orders.json' , order)
-            .then(res => {
-                this.setState({
-                    loading:false
-                })
-                this.props.history.push('/')
-            })
-            .catch(err =>{
-                this.setState({
-                    loading:false
-                })
-            })
+        // axios.post('/orders.json' , order)
+        //     .then(res => {
+        //         this.setState({
+        //             loading:false
+        //         })
+        //         this.props.history.push('/')
+        //     })
+        //     .catch(err =>{
+        //         this.setState({
+        //             loading:false
+        //         })
+        //     })
     }
 
     inputChangeHandler = (e,dataKey) =>{
@@ -135,7 +145,7 @@ export default connect(mapStateToProps)(class extends Component {
         }
 
         return (
-            <Modal show={this.state.formVisible} backDropClicked={this.cancelFormHandler}>
+            <Modal show={this.props.formVisible} backDropClicked={this.cancelFormHandler}>
                 {form}
             </Modal>
         )
