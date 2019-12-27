@@ -16,7 +16,7 @@ import * as actionTypes from '../../store/action'
 const mapStateToProps = state => {
     return {
         ing : state.ingredients,
-        price: state.totalPrice
+        price: state.totalPrice,
     }
 }
 
@@ -30,14 +30,6 @@ const mapDispatchToProps = dispatch =>{
 export default connect(mapStateToProps,mapDispatchToProps)(withErrorHandler(class extends Component{
 
     state = {
-        // ingredients:null,
-        // ingredients:{
-        //     bacon:0,
-        //     cheese:0,
-        //     meat:0,
-        //     salad:0
-        // },
-        purchasable:false,
         purchasing:false,
         loading:false,
         error:false
@@ -51,49 +43,8 @@ export default connect(mapStateToProps,mapDispatchToProps)(withErrorHandler(clas
         // })
     // }
 
-    // AddIngredientsHandle = type =>{
-    //     let OldCount = this.[type]
-    //     let NewCount = OldCount + 1
-    //     let UpdatedIngredients = {
-    //         ...this.state.ingredients
-    //     } 
-    //     UpdatedIngredients[type] = NewCount
-
-    //     let OldPrice = this.state.totalPrice
-    //     let NewPrice = OldPrice + INGREDIENTS_COST[type]
-
-    //     let purchasable = this.IsItPurchasable(NewPrice)
-
-    //     this.setState({
-    //         totalPrice:NewPrice,
-    //         ingredients:UpdatedIngredients,
-    //         purchasable
-    //     })        
-    // }
-
-    // RemoveIngredientsHandler = type =>{
-    //     let OldCount = this.state.ingredients[type]
-    //     let NewCount = OldCount - 1
-    //     if(NewCount<0) return
-    //     let UpdatedIngredients = {
-    //         ...this.state.ingredients
-    //     } 
-    //     UpdatedIngredients[type] = NewCount
-
-    //     let OldPrice = this.state.totalPrice
-    //     let NewPrice = OldPrice - INGREDIENTS_COST[type]
-
-    //     let purchasable = this.IsItPurchasable(NewPrice)
-
-    //     this.setState({
-    //         totalPrice:NewPrice,
-    //         ingredients:UpdatedIngredients,
-    //         purchasable
-    //     })
-    // }
-
-    IsItPurchasable = (price) =>{
-        return price !== 4 
+    IsItPurchasable = () =>{
+        return this.props.price !== 4 
     } 
 
     Purchasing = ()=>{
@@ -130,7 +81,7 @@ export default connect(mapStateToProps,mapDispatchToProps)(withErrorHandler(clas
                     <div style={{width:'50%',margin:'auto'}}>
                         <Burger ingredients = {this.props.ing} />
                     </div>
-                    <BuildControls orderIt={this.Purchasing} purchasable={this.state.purchasable} price={this.props.price} AddIngr={this.props.addIngr} RemoveIngr={this.props.remvIngr} ingredients={this.props.ing}/>
+                    <BuildControls orderIt={this.Purchasing} purchasable={this.IsItPurchasable()} price={this.props.price} AddIngr={this.props.addIngr} RemoveIngr={this.props.remvIngr} ingredients={this.props.ing}/>
                 </Fragment>
             )
         }

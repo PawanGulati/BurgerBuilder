@@ -33,7 +33,7 @@ export default (state=initialState,action) => {
                     ingredients:{...state.ingredients,
                         [action.ingrName]: state.ingredients[action.ingrName] ? state.ingredients[action.ingrName] - 1 : 0
                     },
-                    totalPrice: state.totalPrice !==4 ? state.totalPrice - INGREDIENTS_COST[action.ingrName] : state.totalPrice  
+                    totalPrice: state.ingredients[action.ingrName] ? state.totalPrice - INGREDIENTS_COST[action.ingrName] : state.totalPrice,
         }
         default:
             return state
