@@ -55,3 +55,15 @@ export const purchaseDone = (orderData) =>{
             })
     }
 }
+
+export const purchaseStart = ()=>{
+    return dispatch =>{
+        dispatch(purchaseLoad())
+    }
+}
+
+export const formVisible = ()=>{
+    return{
+        type:actionTypes.SUBMIT_DATA
+    }
+}

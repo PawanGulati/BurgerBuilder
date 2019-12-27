@@ -66,7 +66,7 @@ export default connect(mapStateToProps,mapDispatchToProps)(withErrorHandler(clas
 
     render(){
 
-        let burger = this.props.error ? <p style={{margin:'50% 0 0 20%'}}><strong>ingredients ain't found !!</strong> </p> : <Spinner/>
+        let burger = this.props.error ? <p style={{margin:'20% 0 0 30%'}}><strong>ingredients ain't found !!</strong> </p> : <Spinner/>
         let orderSummary = null
         if(this.props.ing){
             orderSummary = <OrderSummary price={this.props.price.toFixed(2)} ingredients= {this.props.ing} cancelPurchase={this.CancelPurchasingHandler} continuePurchase={this.ContinuePurchasingHandler}/>

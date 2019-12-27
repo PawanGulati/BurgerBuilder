@@ -6,6 +6,7 @@ import ContactData from './ContactData/ContactData';
 
 //Implementin' REDUX to project
 import {connect} from 'react-redux'
+import * as orderAction from '../../store/actions/orders'
 
 const mapStateToProps = state =>{
     return{
@@ -13,12 +14,12 @@ const mapStateToProps = state =>{
     }
 }
 
-// const mapDispatchToProps = dispatch =>{
-//     return{
-        
-//     }
-// }
-export default connect(mapStateToProps)(class extends Component {
+const mapDispatchToProps = dispatch =>{
+    return{
+        formVisible:()=>{dispatch(orderAction.formVisible())}       
+    }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(class extends Component {
 
     // componentDidMount(){        
         // let ingredients = {}
@@ -39,6 +40,7 @@ export default connect(mapStateToProps)(class extends Component {
     }
 
     ContinueCheckoutHandler = () =>{
+        this.props.formVisible()
         this.props.history.push(this.props.match.path + '/contact-data')        
     }
 
