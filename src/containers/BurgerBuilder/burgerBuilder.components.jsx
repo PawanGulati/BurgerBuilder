@@ -10,7 +10,7 @@ import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
 import axios from '../../axios-orders'
 
 import {connect} from 'react-redux'
-import * as actionTypes from '../../store/action'
+import * as actions from '../../store/actions/burgerBuilder'
 
 
 const mapStateToProps = state => {
@@ -22,8 +22,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch =>{
     return{
-        addIngr:(ingrName)=>dispatch({type:actionTypes.ADDINGR,ingrName}),
-        remvIngr:(ingrName)=>dispatch({type:actionTypes.REMVINGR,ingrName}),
+        addIngr:(ingrName)=>dispatch(actions.addIngr(ingrName)),
+        remvIngr:(ingrName)=>dispatch(actions.remvIngr(ingrName)),
     }
 }
 
