@@ -10,20 +10,22 @@ import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
 import axios from '../../axios-orders'
 
 import {connect} from 'react-redux'
-import * as actions from '../../store/actions/burgerBuilder'
-
+import * as builderActions from '../../store/actions/burgerBuilder'
+import * as orderActions from '../../store/actions/orders'
 
 const mapStateToProps = state => {
     return {
         ing : state.ingredients,
         price: state.totalPrice,
+        error:state.error
     }
 }
 
 const mapDispatchToProps = dispatch =>{
     return{
-        addIngr:(ingrName)=>dispatch(actions.addIngr(ingrName)),
-        remvIngr:(ingrName)=>dispatch(actions.remvIngr(ingrName)),
+        addIngr:(ingrName)=>dispatch(builderActions.addIngr(ingrName)),
+        remvIngr:(ingrName)=>dispatch(builderActions.remvIngr(ingrName)),
+        initIngr:()=>dispatch(orderActions.initIngr())
     }
 }
 
@@ -32,16 +34,11 @@ export default connect(mapStateToProps,mapDispatchToProps)(withErrorHandler(clas
     state = {
         purchasing:false,
         loading:false,
-        error:false
     }   
 
-    // componentDidMount(){
-        // axios.get('/ingredients.json').then(res => {
-        //     this.setState({ingredients:res.data})
-        // }).catch(err => {
-        //     this.setState({error:true})
-        // })
-    // }
+    componentDidMount(){
+        this.props.initIngr()
+    }
 
     IsItPurchasable = () =>{
         return this.props.price !== 4 
@@ -69,7 +66,7 @@ export default connect(mapStateToProps,mapDispatchToProps)(withErrorHandler(clas
 
     render(){
 
-        let burger = this.state.error ? <p style={{margin:'50% 0 0 20%'}}><strong>ingredients ain't found !!</strong> </p> : <Spinner/>
+        let burger = this.props.error ? <p style={{margin:'50% 0 0 20%'}}><strong>ingredients ain't found !!</strong> </p> : <Spinner/>
         let orderSummary = null
         if(this.props.ing){
             orderSummary = <OrderSummary price={this.props.price.toFixed(2)} ingredients= {this.props.ing} cancelPurchase={this.CancelPurchasingHandler} continuePurchase={this.ContinuePurchasingHandler}/>
