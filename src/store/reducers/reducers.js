@@ -1,13 +1,9 @@
 import * as actionTypes from '../actions/actionTypes'
 
 const initialState = {
-    ingredients:{
-        bacon:0,
-        cheese:0,
-        meat:0,
-        salad:0
-    },
-    totalPrice:4
+    ingredients:null,
+    totalPrice:4,
+    error:false
 }
 
 const INGREDIENTS_COST = {
@@ -35,6 +31,16 @@ export default (state=initialState,action) => {
                     },
                     totalPrice: state.ingredients[action.ingrName] ? state.totalPrice - INGREDIENTS_COST[action.ingrName] : state.totalPrice,
         }
+        case actionTypes.INIT_INGR:
+            return{
+                ...state,
+                ingredients:action.data
+            }
+        case actionTypes.FETCH_FAIL_INGR:
+            return{
+                ...state,
+                error:true
+            }    
         default:
             return state
     }
