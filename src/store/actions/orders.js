@@ -14,6 +14,26 @@ const FetchFailed = () =>{
     }
 }
 
+const setOrder = (orderId,orderData) =>{
+    return{
+        type:actionTypes.PURCHASE_DONE,
+        orderId,
+        orderData
+    }
+}
+
+const failOrder = () =>{
+    return{
+        type:actionTypes.PURCHASE_FAIL
+    }
+}
+
+const purchaseLoad = () =>{
+    return{
+        type:actionTypes.PURCHASE_START
+    }
+}
+
 export const initIngr = () => {
     return dispatch =>{
         axios.get('/ingredients.json').then(res => {
@@ -21,5 +41,17 @@ export const initIngr = () => {
         }).catch(err =>{
             dispatch(FetchFailed())
         })
+    }
+}
+
+export const purchaseDone = (orderData) =>{
+    return dispatch =>{
+        axios.post('/orders.json' , orderData)
+            .then(res => {
+                dispatch(setOrder(res.data,orderData))
+            })
+            .catch(err =>{
+                dispatch(failOrder())
+            })
     }
 }
