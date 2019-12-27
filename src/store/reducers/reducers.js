@@ -3,7 +3,10 @@ import * as actionTypes from '../actions/actionTypes'
 const initialState = {
     ingredients:null,
     totalPrice:4,
-    error:false
+    error:false,
+    orders:[],
+    loading:false,
+    formVisible:true
 }
 
 const INGREDIENTS_COST = {
@@ -40,7 +43,35 @@ export default (state=initialState,action) => {
             return{
                 ...state,
                 error:true
+            } 
+        case actionTypes.PURCHASE_DONE:
+            const order={
+                id:action.orderId,
+                orderData:action.orderData
+            }
+            return{
+                ...state,
+                orders:state.orders.concat(order),
+                loading:false,
+                formVisible:false
             }    
+        case actionTypes.PURCHASE_FAIL:
+            return{
+                ...state,
+                loading:false,
+                formVisible:false
+            }  
+        case actionTypes.PURCHASE_START:
+            return{
+                ...state,
+                loading:true
+            }      
+        case actionTypes.SUBMIT_DATA:
+            return{
+                ...state,
+                formVisible:true
+            }    
+
         default:
             return state
     }
