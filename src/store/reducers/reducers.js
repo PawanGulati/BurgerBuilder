@@ -38,7 +38,8 @@ export default (state=initialState,action) => {
         case actionTypes.INIT_INGR:
             return{
                 ...state,
-                ingredients:action.data
+                ingredients:action.data,
+                totalPrice:4
             }
         case actionTypes.FETCH_FAIL_INGR:
             return{
