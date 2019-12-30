@@ -2,7 +2,13 @@ export const ADDINGR = 'ADDINGR'
 export const REMVINGR = 'REMVINGR'
 export const INIT_INGR= 'INIT_INGR'
 export const FETCH_FAIL_INGR= 'FETCH_FAIL_INGR'
+
 export const PURCHASE_DONE= 'PURCHASE_DONE'
 export const PURCHASE_FAIL= 'PURCHASE_FAIL'
 export const PURCHASE_START = 'PURCHASE_START'
+
 export const SUBMIT_DATA = 'SUBMIT_DATA'
+
+export const ORDERS_START = 'ORDERS_START'
+export const ORDERS_FETCH = 'ORDERS_FETCH'
+export const ORDERS_FAIL = 'ORDERS_FAIL'
