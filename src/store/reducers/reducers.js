@@ -46,9 +46,10 @@ export default (state=initialState,action) => {
             } 
         case actionTypes.PURCHASE_DONE:
             const order={
-                id:action.orderId,
+                id:action.orderId.name,
                 orderData:action.orderData
             }
+            console.log(order);
             return{
                 ...state,
                 orders:state.orders.concat(order),
@@ -71,7 +72,12 @@ export default (state=initialState,action) => {
                 ...state,
                 formVisible:true
             }    
-
+        case actionTypes.ORDERS_FETCH:
+            const updatedOrders = [...action.data]
+            return{
+                ...state,
+                orders: updatedOrders
+            }
         default:
             return state
     }

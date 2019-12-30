@@ -14,6 +14,7 @@ const FetchFailed = () =>{
     }
 }
 
+//Purchasing Page funcS
 const setOrder = (orderId,orderData) =>{
     return{
         type:actionTypes.PURCHASE_DONE,
@@ -31,6 +32,26 @@ const failOrder = () =>{
 const purchaseLoad = () =>{
     return{
         type:actionTypes.PURCHASE_START
+    }
+}
+
+//Orders Page funcS
+const setOrders = (data) =>{
+    return{
+        type:actionTypes.ORDERS_FETCH,
+        data
+    }
+}
+
+const ordersFail = () =>{
+    return{
+        type:actionTypes.ORDERS_FAIL
+    }
+}
+
+const ordersLoad = ()=>{
+    return{
+        type:actionTypes.ORDERS_START
     }
 }
 
@@ -59,6 +80,38 @@ export const purchaseDone = (orderData) =>{
 export const purchaseStart = ()=>{
     return dispatch =>{
         dispatch(purchaseLoad())
+    }
+}
+
+export const ordersFetch = ()=>{
+    return dispatch =>{
+        axios.get('/orders.json').then(res => {
+            // console.log(res.data);
+            const updatedOrders=[] 
+            for(let order in res.data){
+                let order1 = {...res.data[order]}
+                // console.log(order1);
+                
+                updatedOrders.push({
+                    ingredients:{...order1.ingredients},
+                    price:order1.price,
+                    id:order
+                })
+            }
+            console.log(updatedOrders);
+            
+            dispatch(setOrders(updatedOrders))
+        }).catch(err =>{
+            // dispatch(OrdersFail())
+            console.log(err);
+            
+        })
+    }
+}
+
+export const ordersStart = ()=>{
+    return dispatch =>{
+        dispatch(ordersLoad())
     }
 }
 
