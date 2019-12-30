@@ -3,7 +3,7 @@ import * as actionTypes from '../actions/actionTypes'
 const initialState = {
     ingredients:null,
     totalPrice:4,
-    error:false,
+    error:null,
     orders:[],
     loading:false,
     formVisible:true
@@ -42,7 +42,7 @@ export default (state=initialState,action) => {
         case actionTypes.FETCH_FAIL_INGR:
             return{
                 ...state,
-                error:true
+                error:action.err
             } 
         case actionTypes.PURCHASE_DONE:
             const order={
@@ -60,7 +60,8 @@ export default (state=initialState,action) => {
             return{
                 ...state,
                 loading:false,
-                formVisible:false
+                formVisible:false,
+                error:action.err
             }  
         case actionTypes.PURCHASE_START:
             return{
@@ -76,7 +77,13 @@ export default (state=initialState,action) => {
             const updatedOrders = [...action.data]
             return{
                 ...state,
-                orders: updatedOrders
+                orders: updatedOrders,
+                error:null
+            }
+        case actionTypes.ORDERS_FAIL:
+            return{
+                ...state,
+                error:action.err
             }
         default:
             return state

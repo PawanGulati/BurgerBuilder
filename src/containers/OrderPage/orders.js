@@ -5,22 +5,22 @@ import {connect} from 'react-redux'
 import * as actions from '../../store/actions/orders'
 import Spinner from '../../components/UI/Spinner/Spinner'
 
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
+import axios from '../../axios-orders'
+
 const mapStateToProps = state =>{
     return{
-        ing:state.ingredients,
-        price:state.totalPrice,
         orders:state.orders
     }
 }
 
 const mapDispatchToProps = dispatch =>{
     return{
-        ordersFetch : ()=>{dispatch(actions.ordersFetch())},
-        // ordersFail : ()=>{dispatch(actions.ordersFail())}
+        ordersFetch : ()=>{dispatch(actions.ordersFetch())}
     }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(class extends Component {
+export default connect(mapStateToProps,mapDispatchToProps)(withErrorHandler(class extends Component {
 
     componentDidMount(){
         this.props.ordersFetch()
@@ -42,4 +42,4 @@ export default connect(mapStateToProps,mapDispatchToProps)(class extends Compone
             </div>
         )
     }
-})
+},axios))

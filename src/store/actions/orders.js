@@ -8,9 +8,10 @@ const setIngr = (data) =>{
     }
 }
 
-const FetchFailed = () =>{
+const FetchFailed = (err) =>{
     return{
-        type:actionTypes.FETCH_FAIL_INGR
+        type:actionTypes.FETCH_FAIL_INGR,
+        err
     }
 }
 
@@ -23,9 +24,10 @@ const setOrder = (orderId,orderData) =>{
     }
 }
 
-const failOrder = () =>{
+const failOrder = (err) =>{
     return{
-        type:actionTypes.PURCHASE_FAIL
+        type:actionTypes.PURCHASE_FAIL,
+        err
     }
 }
 
@@ -43,9 +45,10 @@ const setOrders = (data) =>{
     }
 }
 
-const ordersFail = () =>{
+const ordersFail = (err) =>{
     return{
-        type:actionTypes.ORDERS_FAIL
+        type:actionTypes.ORDERS_FAIL,
+        err
     }
 }
 
@@ -60,7 +63,7 @@ export const initIngr = () => {
         axios.get('/ingredients.json').then(res => {
             dispatch(setIngr(res.data))
         }).catch(err =>{
-            dispatch(FetchFailed())
+            dispatch(FetchFailed(err))
         })
     }
 }
@@ -72,7 +75,7 @@ export const purchaseDone = (orderData) =>{
                 dispatch(setOrder(res.data,orderData))
             })
             .catch(err =>{
-                dispatch(failOrder())
+                dispatch(failOrder(err))
             })
     }
 }
@@ -102,9 +105,7 @@ export const ordersFetch = ()=>{
             
             dispatch(setOrders(updatedOrders))
         }).catch(err =>{
-            // dispatch(OrdersFail())
-            console.log(err);
-            
+            dispatch(ordersFail(err))
         })
     }
 }
