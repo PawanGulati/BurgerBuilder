@@ -121,3 +121,9 @@ export const formVisible = ()=>{
         type:actionTypes.SUBMIT_DATA
     }
 }
+
+export const purchaseInit = ()=>{
+    return{
+        type:actionTypes.PURCHASE_INIT
+    }
+}

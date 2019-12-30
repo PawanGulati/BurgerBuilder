@@ -6,7 +6,8 @@ const initialState = {
     error:null,
     orders:[],
     loading:false,
-    formVisible:true
+    formVisible:true,
+    purchased:false
 }
 
 const INGREDIENTS_COST = {
@@ -44,6 +45,11 @@ export default (state=initialState,action) => {
                 ...state,
                 error:action.err
             } 
+        case actionTypes.PURCHASE_INIT:
+            return{
+                ...state,
+                purchased:false
+            }    
         case actionTypes.PURCHASE_DONE:
             const order={
                 id:action.orderId.name,
@@ -54,7 +60,8 @@ export default (state=initialState,action) => {
                 ...state,
                 orders:state.orders.concat(order),
                 loading:false,
-                formVisible:false
+                formVisible:false,
+                purchased:true
             }    
         case actionTypes.PURCHASE_FAIL:
             return{
