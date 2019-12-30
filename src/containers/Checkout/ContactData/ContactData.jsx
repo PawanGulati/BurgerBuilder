@@ -7,24 +7,32 @@ import Spinner from '../../../components/UI/Spinner/Spinner'
 //Implementin' REDUX to project
 import {connect} from 'react-redux'
 import * as orderAction from '../../../store/actions/orders'
+import { Redirect } from 'react-router-dom'
 
 const mapStateToProps = state => {
     return{
         ing:state.ingredients,
         price:state.totalPrice,
         loading:state.loading,
-        formVisible:state.formVisible
+        formVisible:state.formVisible,
+        purchased:state.purchased
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return{
         purchaseDone:(orderData)=>{dispatch(orderAction.purchaseDone(orderData))},
-        purchaseStart:()=>{dispatch(orderAction.purchaseStart())}
+        purchaseStart:()=>{dispatch(orderAction.purchaseStart())},
+        purchaseInit:()=>{dispatch(orderAction.purchaseInit())}
     }
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(class extends Component {
+
+    constructor(props){
+        super(props)
+        this.props.purchaseInit()
+    }
 
     state = {
         orderForm:{
@@ -137,8 +145,15 @@ export default connect(mapStateToProps,mapDispatchToProps)(class extends Compone
         })
     }
 
-    render() {
+    //Adding REDIRECT to '/' after success
+    
 
+    render() {
+        let redirect = null;
+        if(this.props.purchased)
+        {
+            redirect = <Redirect to='/'/>
+        }
         let form = <Spinner/>
         if(!this.state.loading){
             form = <ContactForm orderForm={this.state.orderForm} inputChange={this.inputChangeHandler} continueOrder={this.ContinueFormHandler}/>
@@ -146,6 +161,7 @@ export default connect(mapStateToProps,mapDispatchToProps)(class extends Compone
 
         return (
             <Modal show={this.props.formVisible} backDropClicked={this.cancelFormHandler}>
+                {redirect}
                 {form}
             </Modal>
         )

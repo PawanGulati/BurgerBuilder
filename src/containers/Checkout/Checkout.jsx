@@ -10,13 +10,15 @@ import * as orderAction from '../../store/actions/orders'
 
 const mapStateToProps = state =>{
     return{
-        ing : state.ingredients
+        ing : state.ingredients,
+        purchased:state.purchased
     }
 }
 
 const mapDispatchToProps = dispatch =>{
     return{
-        formVisible:()=>{dispatch(orderAction.formVisible())}       
+        formVisible:()=>{dispatch(orderAction.formVisible())},
+        purchaseInit:()=>{dispatch(orderAction.purchaseInit())}
     }
 }
 export default connect(mapStateToProps,mapDispatchToProps)(class extends Component {
@@ -41,6 +43,7 @@ export default connect(mapStateToProps,mapDispatchToProps)(class extends Compone
 
     ContinueCheckoutHandler = () =>{
         this.props.formVisible()
+        this.props.purchaseInit()
         this.props.history.push(this.props.match.path + '/contact-data')        
     }
 
