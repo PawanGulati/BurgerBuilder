@@ -5,5 +5,7 @@ import classes from './NavigationItems.module.css'
 
 export default props => 
         <ul className={classes.NavItems}>
-            <NavItem>Home</NavItem>
+            <NavItem href={'/'}>Home</NavItem>
+            <NavItem href={'/orders'}>Orders</NavItem>
         </ul>
+//TODO: Active Functionality to be added 
