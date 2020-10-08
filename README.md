@@ -17,9 +17,9 @@ Sorry didn't displayed ingredient's costs in the app :sweat_smile:, will do soon
 ***Kinda costly huh !!***
 
 ### TODOs
-- [ ] Authentication using FireBase APIs(SignUp n SignIn)
-- [ ] Form Validation to be handled
-- [ ] NavLink functionality to be added with .active styling
+- [x] Authentication using FireBase APIs(SignUp n SignIn)
+- [x] Form Validation to be handled
+- [x] NavLink functionality to be added with .active styling
 - [ ] Will make REDUX Reducer's switch case more lean through addding some utility
 - [ ] Structuring reducres differently for different component and combing 'em at last via CombnineReducers
-- [ ] Handling error correctly in checkoutPage  
+- [x] Handling error correctly in checkoutPage  
